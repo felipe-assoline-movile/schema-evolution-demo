@@ -1,6 +1,8 @@
 buildscript {
     ext {
         springBootVersion = '2.0.4.RELEASE'
+        springCloudVersion = 'Finchley.SR1'
+        avroVersion = '1.8.2'
     }
     repositories {
         mavenCentral()
@@ -23,14 +25,14 @@ repositories {
     mavenCentral()
 }
 
-
-ext {
-    springCloudVersion = 'Finchley.SR1'
-}
-
 dependencies {
     compile('org.springframework.cloud:spring-cloud-stream')
+    compile('org.springframework.cloud:spring-cloud-stream-schema')
     compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit')
+
+    compile("org.apache.avro:avro:${avroVersion}")
+
+    compile project(':message-sdk')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.cloud:spring-cloud-stream-test-support')

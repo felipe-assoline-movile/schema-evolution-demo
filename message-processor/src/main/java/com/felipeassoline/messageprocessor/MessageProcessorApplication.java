@@ -1,5 +1,6 @@
 package com.felipeassoline.messageprocessor;
 
+import com.felipeassoline.messagesdk.MessageEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -22,7 +23,7 @@ public class MessageProcessorApplication {
         private final Logger logger = LoggerFactory.getLogger(MessageProcessor.class);
 
         @StreamListener(target = Sink.INPUT)
-        public void process(Message<String> message) {
+        public void process(Message<MessageEvent> message) {
             logger.info("Processing payload = " + message);
         }
 
