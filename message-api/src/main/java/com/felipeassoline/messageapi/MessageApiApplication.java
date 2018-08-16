@@ -1,9 +1,8 @@
 package com.felipeassoline.messageapi;
 
-import com.felipeassoline.messagesdk.MessageEvent;
+import com.felipeassoline.schemas.MsgWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -12,6 +11,8 @@ import org.springframework.cloud.stream.schema.client.EnableSchemaRegistryClient
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
 
 @SpringBootApplication
 @EnableSchemaRegistryClient
@@ -27,17 +28,26 @@ public class MessageApiApplication {
         private final Source source;
         private final Logger logger = LoggerFactory.getLogger(MessageController.class);
 
-        @Autowired
         MessageController(final Source source) {
             this.source = source;
         }
 
         @GetMapping("/send")
-        public MessageEvent send(final String messageText, final String messageTo) {
-            MessageEvent messageEvent = new MessageEvent(messageTo, messageText);
+        public String send(final String messageText, final String messageTo) throws IOException {
+
+
+            MsgWrapper msgWrapper = new MsgWrapper();
+
+
+            msgWrapper.setTo(messageTo);
+            msgWrapper.setText(messageText);
+            msgWrapper.setFrom(messageTo);
+            msgWrapper.setTest1(null);
+
+
             logger.info(messageText);
-            source.output().send(MessageBuilder.withPayload(messageEvent).build());
-            return messageEvent;
+            source.output().send(MessageBuilder.withPayload(msgWrapper).build());
+            return "messageText=" + messageText + ",messageTo=" + messageTo;
         }
     }
 }

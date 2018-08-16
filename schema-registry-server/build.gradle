@@ -12,7 +12,6 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
@@ -24,17 +23,8 @@ repositories {
     mavenCentral()
 }
 
-
-ext {
-
-}
-
 dependencies {
-    compile('org.springframework.cloud:spring-cloud-stream')
     compile('org.springframework.cloud:spring-cloud-stream-schema-server')
-
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile('org.springframework.cloud:spring-cloud-stream-test-support')
 }
 
 dependencyManagement {

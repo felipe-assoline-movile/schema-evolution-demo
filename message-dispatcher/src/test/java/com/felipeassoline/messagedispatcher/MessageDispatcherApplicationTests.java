@@ -1,4 +1,4 @@
-package com.felipeassoline.messageprocessor;
+package com.felipeassoline.messagedispatcher;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MessageProcessorApplicationTests {
+public class MessageDispatcherApplicationTests {
 
     @Test
     public void contextLoads() {

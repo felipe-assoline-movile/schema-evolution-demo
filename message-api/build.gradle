@@ -6,9 +6,11 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("com.commercehub.gradle.plugin:gradle-avro-plugin:0.14.2")
     }
 }
 
@@ -16,6 +18,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.commercehub.gradle.plugin.avro"
 
 group = 'com.felipeassoline'
 version = '0.0.1-SNAPSHOT'
@@ -23,6 +26,7 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -34,8 +38,6 @@ dependencies {
 
     compile("org.apache.avro:avro:${avroVersion}")
 
-    compile project(':message-sdk')
-
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.cloud:spring-cloud-stream-test-support')
 }
@@ -43,5 +45,18 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {
+    source("src/main/resources/avro")
+    outputDir = file("src/main/genAvro")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src/main/java", generateAvro.outputDir]
+        }
     }
 }

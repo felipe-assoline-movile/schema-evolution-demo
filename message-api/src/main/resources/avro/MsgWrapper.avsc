@@ -1,0 +1,11 @@
+{
+    "type": "record",
+    "name": "MsgWrapper",
+    "namespace": "com.felipeassoline.schemas",
+    "fields": [
+        {"name": "to", "type": ["string", "null"]},
+        {"name": "from", "type": ["string", "null"]},
+        {"name": "text", "type": ["string", "null"]},
+        {"name": "test1", "type": ["string", "null"]}
+    ]
+}

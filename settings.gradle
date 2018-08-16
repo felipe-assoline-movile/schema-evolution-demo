@@ -3,5 +3,5 @@ rootProject.name = 'schema-evolution-demo'
 include "schema-registry-server"
 include "message-api"
 include "message-processor"
-include 'message-sdk'
+include "message-dispatcher"
 
